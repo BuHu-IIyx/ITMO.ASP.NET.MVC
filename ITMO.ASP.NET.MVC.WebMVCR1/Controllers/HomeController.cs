@@ -10,26 +10,69 @@ namespace ITMO.ASP.NET.MVC.WebMVCR1.Controllers
 {
     public class HomeController : Controller
     {
-        // GET: Home
-        //public ActionResult Index()
-        //{
-        //    return View();
-        //}
-        public string Index(string hel)
+        //GET: Home
+        public ViewResult Index()
         {
-            //string res = ExeEnum();            
-            //string Greeting = ModelClass.ModelHello() + ", " + hel;
-            //string res = ExeStruct();
-            //string res = StudyCsharp.SetStatus(3);
-            //string res = StudyCsharp.GetFunction(0, 9);
-            //string res = ExeFactorial(5);
-            //string res = ExeTriangle();
-            //string res = ExeCircle();
-            //string res = ExePolim();
-            string res = ExeCollection();
-            return res;
+            int hour = DateTime.Now.Hour; 
+            ViewBag.Greeting = hour < 12 ? "Доброе утро" : "Добрый день";
+            ViewData["Mes"] = "хорошего настроения";
+            return View();
         }
-        public string ExeCollection()
+        private static PersonRepository db = new PersonRepository();
+        [HttpGet]
+        public ViewResult InputData()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ViewResult InputData(Person p)
+        {
+            db.AddResponse(p);
+            return View("Hello", p);
+        }
+        public ViewResult OutputData()
+        {
+            ViewBag.Pers = db.GetAllResponses;
+            ViewBag.Count = db.NumberOfPerson;
+            return View("OutputData");
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            //public string Index(string hel)
+            //{
+            //    //string res = ExeEnum();            
+            //    //string Greeting = ModelClass.ModelHello() + ", " + hel;
+            //    //string res = ExeStruct();
+            //    //string res = StudyCsharp.SetStatus(3);
+            //    //string res = StudyCsharp.GetFunction(0, 9);
+            //    //string res = ExeFactorial(5);
+            //    //string res = ExeTriangle();
+            //    //string res = ExeCircle();
+            //    //string res = ExePolim();
+            //    string res = ExeCollection();
+            //    return res;
+            //}
+            public string ExeCollection()
         {
             List<Circle> cirs = new List<Circle>
             {
