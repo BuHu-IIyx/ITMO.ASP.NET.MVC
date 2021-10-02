@@ -40,6 +40,18 @@ namespace ITMO.ASP.NET.MVC.MvcCreditApp1.Controllers
             ViewBag.Bids = allBids;
             return View();
         }
+
+        public ActionResult BidSearch(string name)
+        {
+            var allBids = db.Bids.Where(a => a.CreditHead.Contains(name)).ToList();
+            if (allBids.Count == 0)
+            {
+                return Content("Указанный кредит " + name + " не найден");
+                //return HttpNotFound();
+            }
+            return PartialView(allBids);
+        }
+
         [HttpPost]
         public string CreateBid(Bid newBid)
         {
